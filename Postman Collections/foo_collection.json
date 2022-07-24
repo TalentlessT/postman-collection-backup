@@ -4,5 +4,194 @@
 		"name": "ABRA API REQUESTS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
-	"item": []
+	"item": [
+		{
+			"name": "Basic Queries",
+			"item": [
+				{
+					"name": "select",
+					"item": [
+						{
+							"name": "invoices with chosen fields and with renaming",
+							"id": "66c2befe-051d-4e1f-b4ab-aa3209a22dc9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=ID,DisplayName+as+DocNumber",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "ID,DisplayName+as+DocNumber"
+										}
+									]
+								},
+								"description": "<h2>Selection example #1</h2><p>Selection of invoices collection where every invoice object is going to have <b>ID</b> and <b>DisplayName. DisplayName</b> will be renamed as <b>DocNumber</b>.</p>\n\nIn this way, it is possible to include user or non-persistent fields of the Business object in the result. However, we recommend using non-persistent BO fields only in extreme cases, their selection degrades performance."
+							},
+							"response": []
+						},
+						{
+							"name": "Invoices with all persistent and user items",
+							"id": "89b0f944-a3cd-4080-b95d-e98c60cca9e7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=*",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "*"
+										}
+									]
+								},
+								"description": "<h2>Selection example #2</h2><p>Selection of invoices collection which will contain all persistant fields and user items of business object.</p>"
+							},
+							"response": []
+						},
+						{
+							"name": "Invoices with chosen fields",
+							"id": "f4361cb7-365a-41a3-a859-593182baa04b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Amount,Firm_ID.Name",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Amount,Firm_ID.Name"
+										}
+									]
+								},
+								"description": "<h2>Selection example #3</h2><p>Selection of invoices collection, where every object is going to contain <b>Amount</b> and firm name to which is invoice issued <b>Firm_ID.Name.</b></p>"
+							},
+							"response": []
+						},
+						{
+							"name": "Invoices with chosen fields and renaming",
+							"id": "2a7ed3b8-ef88-470e-b895-d3c40479bfc4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Amount,Firm_ID.Name+as+FirmName",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Amount,Firm_ID.Name+as+FirmName"
+										}
+									]
+								},
+								"description": "## Selection example #4\n\nThis is copy of ***example #3*** except the **Firm_ID.Name** is renamed using '*as'* in returned json."
+							},
+							"response": []
+						},
+						{
+							"name": "DocNumber created from multiple rows",
+							"id": "16c15d49-2693-4ea2-8ae2-0ca9a47aa42e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=ID,DocQueue_ID.Code||'-'||OrdNumber||'/'||Period_ID.Code+as+DocNumber",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "ID,DocQueue_ID.Code||'-'||OrdNumber||'/'||Period_ID.Code+as+DocNumber"
+										}
+									]
+								},
+								"description": "<h2>Selection example #5</h2><p>Selection of invoices collection, where each invoice object will contain the <b>ID </b>and <b>DisplayName </b>fields, which this time is composed using fields retrieved from linked objects.</p><p>This is a faster variant than shown in the <i><b>example #1</b></i>, in which a non-persistent item <b>DisplayName</b> is used.</p>\n\n*   || - is used to connect strings of text together."
+							},
+							"response": []
+						}
+					],
+					"id": "7aaec45a-49a6-4687-a352-70908611c2ff",
+					"description": "<p>The select clause is used to select the <b>BO</b> fields that will be returned in the query result.</p>\n\n*   **BO** - business object"
+				}
+			],
+			"id": "fd1d63e5-f6f2-4754-8755-37e4117b5526"
+		}
+	]
 }
