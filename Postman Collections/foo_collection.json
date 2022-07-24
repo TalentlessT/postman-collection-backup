@@ -4,29 +4,5 @@
 		"name": "foo_collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
-	"item": [
-		{
-			"name": "requests vol.2 (testing)",
-			"item": [
-				{
-					"name": "Req num 1",
-					"id": "d7889f29-ba03-4352-be0c-4cb4d3141bf0",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": []
-					},
-					"response": []
-				}
-			],
-			"id": "1d7650b4-ff41-487a-9ba2-15b53c236ef8"
-		},
-		{
-			"name": "something random",
-			"item": [],
-			"id": "532e121b-a15d-411e-b86b-979ef10d55a7"
-		}
-	]
+	"item": []
 }
