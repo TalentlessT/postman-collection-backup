@@ -4,5 +4,11 @@
 		"name": "ABRA API REQUESTS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
-	"item": []
+	"item": [
+		{
+			"name": "New Folder",
+			"item": [],
+			"id": "e25853a4-f9ff-45e7-8a00-69354e6cde96"
+		}
+	]
 }
