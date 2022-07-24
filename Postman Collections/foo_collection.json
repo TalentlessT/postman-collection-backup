@@ -6,48 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "requests vol.1 (testing)",
-			"item": [
-				{
-					"name": "Req num 1",
-					"id": "755decb8-0021-4f0c-9a69-69f015f989de",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Req num 2",
-					"id": "7e15188a-582d-4038-9f87-e4a0e6e71c4b",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Req num 3",
-					"id": "f4b14b0f-4da5-492e-9dc8-f3a86a5dcca6",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				}
-			],
-			"id": "711a1a0f-3f11-44d1-b8b7-1613231bf12e"
-		},
-		{
 			"name": "something random 2",
 			"item": [],
 			"id": "1b9d455f-58d6-4a37-a4ab-3330c6adb652"
