@@ -313,9 +313,255 @@
 					],
 					"id": "83fbb427-9e15-478b-af02-ca57b5048968",
 					"description": "The where clause is used to narrow the selection of data. Its value is an expression that returns a Boolean value. The following comparison operators can be used in expressions:\n\n<table><tbody><tr><th><b>operator</b></th><th><b>name</b></th><th><b>meaning</b></th><th><b>example</b></th><th><b>description</b></th></tr><tr><td>eq, =</td><td>equal</td><td>Value comparison. The result is positive if the two values are the same. It can be used to compare against null.</td><td>Code eq '1100000101'</td><td>If the code equals the value of '1100000101' the condition is valid.</td></tr><tr><td>ne, &lt;&gt;</td><td>not equal</td><td>Comparison of nonequivalent values. The result is positive if the two values do not match. It can be used to compare against null.</td><td>Code ne null</td><td>If the code isn't null the condition is valid.</td></tr><tr><td>gt, &gt;</td><td>greater than</td><td>Comparison of value. If one value is bigger than other one the result is positive.</td><td>Code gt 1000</td><td>If the code is bigger than 1000 the condition is valid.</td></tr><tr><td>ge, &gt;=</td><td>equals or greater than</td><td>Comparison of value. If one value is bigger than other one or the value is equal to another value the result is positive.</td><td>Code ge 1000</td><td>If the code is equal to 1000 or bigger than 1000 the condition is valid.</td></tr><tr><td>lt, &lt;</td><td>lower than</td><td>Comparison of value. If one value is lower than other one the result is positive.</td><td>Code lt 1000</td><td>If the code is less than 1000 the condition is valid.</td></tr><tr><td>le, &lt;</td><td>less than or greater than</td><td>Comparison of value. If one value is lower than other one or the value is equal to another value the result is positive.</td><td>Code le 1000</td><td>If the code is equal to 1000 or less than 1000 the condition is valid.</td></tr><tr><td>like</td><td>comparsion</td><td>Comparison of two strings. If the value equals the result is positive. \"*\" - is used as any string.</td><td>Code like '007420'</td><td>If the code is equal to '007420' the condition is valid.</td></tr><tr><td>in</td><td>contains</td><td>Compares the value with multiple values. If value on both sides equals the result is positive.</td><td>Code in ('111', '222', '345')</td><td>If the code is equal to '111' or '222' or '345' the condition is valid.</td></tr><tr><td>between</td><td>is in between;</td><td>Compares if the value is part of interval.</td><td>Code between 100 and 10000</td><td>If the code is equal or greater than 100 and at the same time is equal or lower than 10000 the condition is valid.</td></tr></tbody></table>\n\nExpressions can be combined using logical operators (see the table below for logical operators). The order in which operations are performed can be specified using parentheses.\n\n| **Operator** | **Name** | **Meaning** | **example** | **description** |\n| --- | --- | --- | --- | --- |\n| not | negation | Negates the expression that follows the operator | not (Firm_ID eq '1100000101') | Valid if Firm_ID is not equal to the string '1100000101' |\n| and | and | Valid if both operands are valid (positive). | (Firm_ID eq '1100000101') and (Amount ge 1000) | Valid if Firm_ID is equal to the string '1100000101' and Amount is greater than 1000 |\n| or | or | Valid if at least one of the operands is valid (is positive). | (Firm_ID eq '1100000101') or (Amount ge 1000) | Valid if Firm_ID is equal to the string '1100000101' or Amount is greater than 1000 |"
+				},
+				{
+					"name": "expand",
+					"item": [
+						{
+							"name": "selection of invoices with the entire object of the company",
+							"id": "cb6f4b3d-44a7-4c50-a196-efdc582380ef",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Amount&expand=Firm_ID",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Amount"
+										},
+										{
+											"key": "expand",
+											"value": "Firm_ID"
+										}
+									]
+								},
+								"description": "## Expand example #1\n\nSelection of a collection of invoices issued, each invoice contains the **Amount** and the entire object of the firm (**Firm_ID**) to which it was issued."
+							},
+							"response": []
+						},
+						{
+							"name": "selection of invoices with selected fields of the company object",
+							"id": "ad6d4ab0-f9eb-4ed0-b5df-18580483fce5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Amount&expand=Firm_ID(ID, Code, Name)",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Amount"
+										},
+										{
+											"key": "expand",
+											"value": "Firm_ID(ID, Code, Name)"
+										}
+									]
+								},
+								"description": "## Expand example #2\n\nSelection of a collection of invoices issued, each invoice contains the **Amount** and the object of the company (**Firm_ID**) to which it was issued - the object of the company contains only the files specified in parentheses after the field name in the expand clause. Selected fields can be renamed using the as operator, just like in the select clause."
+							},
+							"response": []
+						},
+						{
+							"name": "selection of invoices with company objects and a full line collection",
+							"id": "0e9eedae-1e42-4240-b7bf-9f094617a52c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Amount&expand=Firm_ID, Rows",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Amount"
+										},
+										{
+											"key": "expand",
+											"value": "Firm_ID, Rows"
+										}
+									]
+								},
+								"description": "## Expand example #3\n\nSelection of the collection of invoices issued, each invoice contains the **Amount**, the entire object of the firm (**Firm_ID**) to which it was issued, and the collection of **Rows** of the invoice."
+							},
+							"response": []
+						},
+						{
+							"name": "invoice selection with company objects and a limited collection of lines",
+							"id": "75c866d7-76d3-48d6-ba75-cd1e9f9f0144",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=id&expand=Rows(select ID, RowType, TotalPrice where RowType eq 3)",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "id"
+										},
+										{
+											"key": "expand",
+											"value": "Rows(select ID, RowType, TotalPrice where RowType eq 3)"
+										}
+									]
+								},
+								"description": "## Expand example #4\n\nA selection of a collection of invoices issued, where each invoice contains an **ID** and a subset of the collection of invoice rows (**Rows**) limited to rows of type 3 (stock). In addition, only the specified fields - ID, line type and amount - are returned."
+							},
+							"response": []
+						},
+						{
+							"name": "invoice selection with company objects and limited row collection and sorting",
+							"id": "3409e384-4558-4358-b5fa-838b55bcf1fd",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=id&expand=Rows(select ID, RowType, TotalPrice where RowType eq 3 orderby PosIndex)",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "id"
+										},
+										{
+											"key": "expand",
+											"value": "Rows(select ID, RowType, TotalPrice where RowType eq 3 orderby PosIndex)"
+										}
+									]
+								},
+								"description": "## Expand example #5\n\nA selection of a collection of invoices issued, where each invoice contains an **ID** and a subset of the collection of invoice rows (**Rows**) limited to rows of type 3 (stock). Only the specified fields - ID, line type and amount - are returned. In addition, the lines are arranged in the same order as on the document."
+							},
+							"response": []
+						},
+						{
+							"name": "selecting invoices with company objects and a limited collection of rows, sorting and expanding items in a subcollection",
+							"id": "5fafe4c3-97aa-47f9-a628-f6ee5a731c52",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=id&expand=Rows(select ID, RowType, TotalPrice where RowType eq 3 orderby PosIndex), Rows.StoreCard_ID(select ID, Code, Name)",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "id"
+										},
+										{
+											"key": "expand",
+											"value": "Rows(select ID, RowType, TotalPrice where RowType eq 3 orderby PosIndex), Rows.StoreCard_ID(select ID, Code, Name)"
+										}
+									]
+								},
+								"description": "## Expand example #6\n\nA selection of a collection of invoices issued, where each invoice contains an **ID** and a subset of the collection of invoice rows (**Rows**) limited to rows of type 3 (stock). Only the specidied fields - ID, line type and amount - are returned. The lines are arranged in the same order as on the document. For stock cards on rows, we also want to get their **ID**, **code** and **name**."
+							},
+							"response": []
+						}
+					],
+					"id": "fc37d28c-3509-41a7-9922-b7b1b648e628",
+					"description": "The expand caluse is used to expand referenced **BO**s and **BO** collections. It is used when we want to obtain a Business object with one query, including **BO**s that are connected to it (typically fields whose name ends with \"_ID\"). It can be individual objects or their collections (typically Rows - document lines)."
 				}
 			],
 			"id": "fd1d63e5-f6f2-4754-8755-37e4117b5526"
+		},
+		{
+			"name": "New Request",
+			"id": "58ab28de-35b4-4517-81dd-b63fa542be0f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }
