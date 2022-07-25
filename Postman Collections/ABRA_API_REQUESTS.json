@@ -552,7 +552,7 @@
 			"id": "fd1d63e5-f6f2-4754-8755-37e4117b5526"
 		},
 		{
-			"name": "New Request",
+			"name": "test",
 			"id": "58ab28de-35b4-4517-81dd-b63fa542be0f",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
