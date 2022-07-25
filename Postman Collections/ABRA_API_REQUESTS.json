@@ -195,7 +195,7 @@
 					"item": [
 						{
 							"name": "Selection of fields with condition",
-							"id": "72a499fe-b616-466e-bade-45271bec4332",
+							"id": "1f9246fd-71a8-4a85-a23e-fe8d91e1a5e9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -228,13 +228,13 @@
 										}
 									]
 								},
-								"description": "<h2>Where example #1</h2><p>Selection of issued invoices with amount greater than 10000.</p>"
+								"description": "<h2>Where example #1</h2><p>Selection of issued invoices with <b>amount</b> greater than 10000.</p>"
 							},
 							"response": []
 						},
 						{
 							"name": "Selection of fields with multiple conditions",
-							"id": "872d1e01-193c-4f21-8934-bf28bea85676",
+							"id": "ba2c47d4-a78c-4ce9-8354-b9a38f04e8ab",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -267,13 +267,13 @@
 										}
 									]
 								},
-								"description": "<p>Selection of multiple fields where Credit field has to be greater than 90000 and Code field has to not equal to \"00005\".</p>"
+								"description": "<h2>Where example #2</h2><p>Selection of issued invoices with <b>amount </b>greater than 10000 and at the same time <b>Firm_ID</b> is not equal to '1100000101'.</p>"
 							},
 							"response": []
 						},
 						{
 							"name": "Selection of fields with date condition",
-							"id": "93ad42f7-f60a-4924-9ac2-c2de4ab30651",
+							"id": "13d68d92-d760-43a2-ac94-2a34ce4b8011",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -306,13 +306,13 @@
 										}
 									]
 								},
-								"description": "<p>Selection of fields with register date later than \"1912-08-02T06:00:00\".</p>"
+								"description": "<h2>Where example #3</h2><p>Selection of receipt cards with issue date 2.8.2018 at 6:00 or later.</p>\n\n*   <p>We can alternatively use notation in the ISO 8601 format to express date and time (2020-07-10 15:00:00)</p>"
 							},
 							"response": []
 						}
 					],
-					"id": "a8284c36-0e2f-4de5-bb99-09b90289c3ed",
-					"description": "Some placeholder <table><tbody><tr><th>operator</th><th>name</th><th>meaning</th><th>example</th><th>description</th></tr><tr><td>eq, =</td><td>equal</td><td>Value comparison. The result is positive if the two values are the same. It can be used to compare against null.</td><td>Code eq '1100000101'</td><td>If the code equals the value of '1100000101' the condition is valid.</td></tr><tr><td>ne, &lt;&gt;</td><td>not equal</td><td>Comparison of nonequivalent values. The result is positive if the two values do not match. It can be used to compare against null.</td><td>Code ne null</td><td>If the code isn't null the condition is valid.</td></tr><tr><td>gt, &gt;</td><td>greater than</td><td>Comparison of value. If one value is bigger than other one the result is positive.</td><td>Code gt 1000</td><td>If the code is bigger than 1000 the condition is valid.</td></tr><tr><td>ge, &gt;=</td><td>equals or greater than</td><td>Comparison of value. If one value is bigger than other one or the value is equal to another value the result is positive.</td><td>Code ge 1000</td><td>If the code is equal to 1000 or bigger than 1000 the condition is valid.</td></tr><tr><td>lt, &lt;</td><td>lower than</td><td>Comparison of value. If one value is lower than other one the result is positive.</td><td>Code lt 1000</td><td>If the code is less than 1000 the condition is valid.</td></tr><tr><td>le, &lt;</td><td>less than or greater than</td><td>Comparison of value. If one value is lower than other one or the value is equal to another value the result is positive.</td><td>Code le 1000</td><td>If the code is equal to 1000 or less than 1000 the condition is valid.</td></tr><tr><td>like</td><td>comparsion</td><td>Comparison of two strings. If the value equals the result is positive. \"*\" - is used as any string.</td><td>Code like '007420'</td><td>If the code is equal to '007420' the condition is valid.</td></tr><tr><td>in</td><td>contains</td><td>Compares the value with multiple values. If value on both sides equals the result is positive.</td><td>Code in ('111', '222', '345')</td><td>If the code is equal to '111' or '222' or '345' the condition is valid.</td></tr><tr><td>between</td><td>is in between;</td><td>Compares if the value is part of interval.</td><td>Code between 100 and 10000</td><td>If the code is equal or greater than 100 and at the same time is equal or lower than 10000 the condition is valid.</td></tr></tbody></table>"
+					"id": "83fbb427-9e15-478b-af02-ca57b5048968",
+					"description": "The where clause is used to narrow the selection of data. Its value is an expression that returns a Boolean value. The following comparison operators can be used in expressions:\n\n<table><tbody><tr><th><b>operator</b></th><th><b>name</b></th><th><b>meaning</b></th><th><b>example</b></th><th><b>description</b></th></tr><tr><td>eq, =</td><td>equal</td><td>Value comparison. The result is positive if the two values are the same. It can be used to compare against null.</td><td>Code eq '1100000101'</td><td>If the code equals the value of '1100000101' the condition is valid.</td></tr><tr><td>ne, &lt;&gt;</td><td>not equal</td><td>Comparison of nonequivalent values. The result is positive if the two values do not match. It can be used to compare against null.</td><td>Code ne null</td><td>If the code isn't null the condition is valid.</td></tr><tr><td>gt, &gt;</td><td>greater than</td><td>Comparison of value. If one value is bigger than other one the result is positive.</td><td>Code gt 1000</td><td>If the code is bigger than 1000 the condition is valid.</td></tr><tr><td>ge, &gt;=</td><td>equals or greater than</td><td>Comparison of value. If one value is bigger than other one or the value is equal to another value the result is positive.</td><td>Code ge 1000</td><td>If the code is equal to 1000 or bigger than 1000 the condition is valid.</td></tr><tr><td>lt, &lt;</td><td>lower than</td><td>Comparison of value. If one value is lower than other one the result is positive.</td><td>Code lt 1000</td><td>If the code is less than 1000 the condition is valid.</td></tr><tr><td>le, &lt;</td><td>less than or greater than</td><td>Comparison of value. If one value is lower than other one or the value is equal to another value the result is positive.</td><td>Code le 1000</td><td>If the code is equal to 1000 or less than 1000 the condition is valid.</td></tr><tr><td>like</td><td>comparsion</td><td>Comparison of two strings. If the value equals the result is positive. \"*\" - is used as any string.</td><td>Code like '007420'</td><td>If the code is equal to '007420' the condition is valid.</td></tr><tr><td>in</td><td>contains</td><td>Compares the value with multiple values. If value on both sides equals the result is positive.</td><td>Code in ('111', '222', '345')</td><td>If the code is equal to '111' or '222' or '345' the condition is valid.</td></tr><tr><td>between</td><td>is in between;</td><td>Compares if the value is part of interval.</td><td>Code between 100 and 10000</td><td>If the code is equal or greater than 100 and at the same time is equal or lower than 10000 the condition is valid.</td></tr></tbody></table>\n\nExpressions can be combined using logical operators (see the table below for logical operators). The order in which operations are performed can be specified using parentheses.\n\n| **Operator** | **Name** | **Meaning** | **example** | **description** |\n| --- | --- | --- | --- | --- |\n| not | negation | Negates the expression that follows the operator | not (Firm_ID eq '1100000101') | Valid if Firm_ID is not equal to the string '1100000101' |\n| and | and | Valid if both operands are valid (positive). | (Firm_ID eq '1100000101') and (Amount ge 1000) | Valid if Firm_ID is equal to the string '1100000101' and Amount is greater than 1000 |\n| or | or | Valid if at least one of the operands is valid (is positive). | (Firm_ID eq '1100000101') or (Amount ge 1000) | Valid if Firm_ID is equal to the string '1100000101' or Amount is greater than 1000 |"
 				}
 			],
 			"id": "fd1d63e5-f6f2-4754-8755-37e4117b5526"
