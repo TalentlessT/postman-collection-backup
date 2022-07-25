@@ -519,6 +519,13 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -547,9 +554,293 @@
 					],
 					"id": "fc37d28c-3509-41a7-9922-b7b1b648e628",
 					"description": "The expand caluse is used to expand referenced **BO**s and **BO** collections. It is used when we want to obtain a Business object with one query, including **BO**s that are connected to it (typically fields whose name ends with \"_ID\"). It can be individual objects or their collections (typically Rows - document lines)."
+				},
+				{
+					"name": "groupby",
+					"item": [
+						{
+							"name": "selection of invoices with aggregation by company",
+							"id": "7e38c14e-726e-481e-8913-27e430845389",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Sum(Amount),Firm_ID&groupby=Firm_ID",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Sum(Amount),Firm_ID"
+										},
+										{
+											"key": "groupby",
+											"value": "Firm_ID"
+										}
+									]
+								},
+								"description": "## Groupby example #1\n\nSelection of a collection of invoices issued, each invoice object contains an amount (**Sum(Amount)**) aggregated according to the companies to which the invoices were issued (**Firm_ID**)."
+							},
+							"response": []
+						},
+						{
+							"name": "selection of invoices with aggregation by company with the entire object of the company",
+							"id": "97321bbf-8215-4dea-a5c3-f18aa5700017",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Sum(Amount)&groupby=Firm_ID&expand=Firm_ID",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Sum(Amount)"
+										},
+										{
+											"key": "groupby",
+											"value": "Firm_ID"
+										},
+										{
+											"key": "expand",
+											"value": "Firm_ID"
+										}
+									]
+								},
+								"description": "## Groupby example #2\n\nSelection of a collection of invoices issued, each invoice object contains and amount (**Sum(Amount)**) aggregated according to the companies to which the invoices were issued - **Firm_ID** contains the complete company object."
+							},
+							"response": []
+						}
+					],
+					"id": "c39827ea-b440-49fb-bdb5-eb46c592814a",
+					"description": "<p>Clause groupby is used to aggregate data in the same way as in SQL.</p>"
+				},
+				{
+					"name": "orderby",
+					"item": [
+						{
+							"name": "selection of invoices sorted by amount",
+							"id": "e971115e-3dec-4bf3-96fa-b7d390edd3dc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Amount&expand=Firm_ID(ID,Code,Name)&orderby=Amount",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Amount"
+										},
+										{
+											"key": "expand",
+											"value": "Firm_ID(ID,Code,Name)"
+										},
+										{
+											"key": "orderby",
+											"value": "Amount"
+										}
+									]
+								},
+								"description": "## Orderby example #1\n\nSelection of a collection of invoices issued, each invoice object contains an **Amount** and an object of the company to which the invoice is issued **Firm_ID**. Data is sorted by amount (default is ascending)."
+							},
+							"response": []
+						},
+						{
+							"name": "selection of invoices sorted by company code",
+							"id": "3b6cf6ff-fe53-474f-8d2b-ddca4e553667",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Amount&expand=Firm_ID(ID,Code,Name)&orderby=Firm_ID.Code,Amount",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Amount"
+										},
+										{
+											"key": "expand",
+											"value": "Firm_ID(ID,Code,Name)"
+										},
+										{
+											"key": "orderby",
+											"value": "Firm_ID.Code,Amount"
+										}
+									]
+								},
+								"description": "## Orderby example #2\n\nSelection of a collection of invoices issued, each invoice object contains an **Amount** and an object of the company to which the invoice is issued **Firm_ID**. Invoices are sorted according to the code of the company to which they are issued, and then according to the amount. It is also possible to sort by fields of referenced objects, as well as multiple fields in general."
+							},
+							"response": []
+						},
+						{
+							"name": "selection of invoices with combined sorting",
+							"id": "a1ddf71a-2de4-496b-9f66-be44aa9f26fb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/issuedinvoices?select=Amount&expand=Firm_ID(ID,Code,Name)&orderby=Firm_ID.Code,Amount+desc",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issuedinvoices"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "Amount"
+										},
+										{
+											"key": "expand",
+											"value": "Firm_ID(ID,Code,Name)"
+										},
+										{
+											"key": "orderby",
+											"value": "Firm_ID.Code,Amount+desc"
+										}
+									]
+								},
+								"description": "## Orderby example #3\n\nSelection of a collection of invoices issued, each invoice object contains **Amount** and an object of the company to which the invoice is issued **Firm_ID**. Invoices are sorted according to the code of the company to which they are issued in ascending order, and then according to the amount in descending order."
+							},
+							"response": []
+						}
+					],
+					"id": "10ada63e-65b2-4f1d-bc77-be613eb0d5aa",
+					"description": "<p>The orderby clause is used to sort output in the same way as in SQL.</p>"
+				},
+				{
+					"name": "skip & take",
+					"item": [
+						{
+							"name": "selection of centers with pagination after ten records",
+							"id": "5d0efe6d-51d8-40ce-9cc7-0d797a90ce55",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/divisions?select=code,name&orderby=code&skip=0&take=10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"divisions"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "code,name"
+										},
+										{
+											"key": "orderby",
+											"value": "code"
+										},
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "take",
+											"value": "10"
+										}
+									]
+								},
+								"description": "## Skip & take example #1\n\nSelection of a restricted center collection for listing pagination purposes. The request returns the first ten centers (sorted by **code**)."
+							},
+							"response": []
+						}
+					],
+					"id": "10b0ba01-b2da-4604-9fc0-39dd1024b32c",
+					"description": "The skip and take clauses are used to limit the number of selected records. A typical use is pagination of the results list. The skip clause specifies how many records to skip, the take clause the number of records to return."
 				}
 			],
 			"id": "fd1d63e5-f6f2-4754-8755-37e4117b5526"
+		},
+		{
+			"name": "New Folder",
+			"item": [],
+			"id": "787f0b2f-1576-436d-a80d-526001461846"
 		}
 	]
 }
