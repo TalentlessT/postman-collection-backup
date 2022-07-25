@@ -249,21 +249,21 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/Firms?select=Name,Credit,Code,DueTerm&where=Credit+gt+90000+and+Code+ne+'00005'",
+									"raw": "{{url}}/issuedinvoices?select=Amount,Firm_ID.Name+as+FirmName&where=Amount+gt+10000+and+Firm_ID+ne+'1100000101'",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
-										"Firms"
+										"issuedinvoices"
 									],
 									"query": [
 										{
 											"key": "select",
-											"value": "Name,Credit,Code,DueTerm"
+											"value": "Amount,Firm_ID.Name+as+FirmName"
 										},
 										{
 											"key": "where",
-											"value": "Credit+gt+90000+and+Code+ne+'00005'"
+											"value": "Amount+gt+10000+and+Firm_ID+ne+'1100000101'"
 										}
 									]
 								},
