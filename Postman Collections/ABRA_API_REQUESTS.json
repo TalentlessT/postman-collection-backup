@@ -210,7 +210,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/issuedinvoices?select=Amount,Firm_ID.Name+as+FirmName&where=Amount+gt+10000+and+Firm_ID+ne+'1100000101'",
+									"raw": "{{url}}/issuedinvoices?select=Amount,Firm_ID.Name+as+FirmName&where=Amount+gt+10000",
 									"host": [
 										"{{url}}"
 									],
@@ -224,7 +224,7 @@
 										},
 										{
 											"key": "where",
-											"value": "Amount+gt+10000+and+Firm_ID+ne+'1100000101'"
+											"value": "Amount+gt+10000"
 										}
 									]
 								},
