@@ -288,21 +288,21 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/Firms?select=Name,RegisterDate$Date&where=RegisterDate$Date+ge+timestamp'1912-08-02T06:00:00'",
+									"raw": "{{url}}/receiptcards?select=DisplayName&where=CreatedAt$DATE+ge+timestamp'2018-08-02T06:00:00'",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
-										"Firms"
+										"receiptcards"
 									],
 									"query": [
 										{
 											"key": "select",
-											"value": "Name,RegisterDate$Date"
+											"value": "DisplayName"
 										},
 										{
 											"key": "where",
-											"value": "RegisterDate$Date+ge+timestamp'1912-08-02T06:00:00'"
+											"value": "CreatedAt$DATE+ge+timestamp'2018-08-02T06:00:00'"
 										}
 									]
 								},
