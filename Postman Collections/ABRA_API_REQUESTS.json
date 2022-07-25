@@ -228,7 +228,7 @@
 										}
 									]
 								},
-								"description": "<p>Selection of multiple fields where Credit field has to be greater than 90000.</p>"
+								"description": "<h2>Where example #1</h2><p>Selection of issued invoices with amount greater than 10000.</p>"
 							},
 							"response": []
 						},
