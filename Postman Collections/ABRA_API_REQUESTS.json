@@ -1521,7 +1521,8 @@
 					"response": []
 				}
 			],
-			"id": "bd96ad24-b1c5-472a-b61e-ea899b19827a"
+			"id": "bd96ad24-b1c5-472a-b61e-ea899b19827a",
+			"description": "Several special resources are implemented in the Web API interface, which can be used to easily create various reports in a wide range of areas - accounting, warehouse management, sales, asset registration and depreciation, payroll and HR, and others. Although they are primarily designed for the needs of the supplied functions for MS Excel, they can also be used independently in any environment, just like all other Web API resources."
 		}
 	]
 }
