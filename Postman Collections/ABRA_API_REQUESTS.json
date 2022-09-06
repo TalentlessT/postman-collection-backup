@@ -838,9 +838,690 @@
 			"id": "fd1d63e5-f6f2-4754-8755-37e4117b5526"
 		},
 		{
-			"name": "Advanced Queries",
-			"item": [],
-			"id": "787f0b2f-1576-436d-a80d-526001461846"
+			"name": "Extended Queries",
+			"item": [
+				{
+					"name": "Select, expand",
+					"item": [
+						{
+							"name": "Select an invoice collection with a field that is composed using fields retrieved from linked objects",
+							"id": "aeaebf6f-9acb-44af-a758-c45c835648b9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"class\": \"issuedinvoices\",\r\n  \"select\": [\r\n\t\"ID\",\r\n\t\"Amount\",\r\n\t{ \"name\": \"DocNumber\", \"value\": \"DocQueue_ID.Code || '-' || OrdNumber || '/' || Period_ID.Code\" }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/query",
+								"description": "<p>Selection of \"ID\", \"Credit\" and \"DocName\" which consists of combination two other attributes.</p>"
+							},
+							"response": []
+						},
+						{
+							"name": "Select a collection of companies with a field using an expression object",
+							"id": "25fe429e-b4be-45a4-93ab-a234b71d3e8b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{user}}",
+										"password": "{{password}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"class\": \"firms\",\r\n  \"select\": [\r\n\t\"ID\",\r\n\t\"Code\",\r\n\t\"Name\",\r\n\t{ \"name\": \"FirmOffices\",\r\n\t  \"value\": [\"Name\"]\r\n\t},\r\n\t{ \"name\": \"BankAccounts\",\r\n\t  \"value\": {\r\n\t  \"field\": \"Rows\",\r\n\t  \"query\": {\r\n\t\t\"select\": [\"ID\", \"Name\", \"BankAccount\"]\r\n\t  }\r\n\t}\r\n  }\r\n ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/query",
+								"description": "<p>Selecton of attributes. Expression object is used for the selection of the \"FirmOffices\" field. Specification object is used for the selection of \"BankAccounts\" (the BankAccounts field, bank accounts are maintained on the company's BO) as Rows</p>"
+							},
+							"response": []
+						},
+						{
+							"name": "Select a collection of price lists using an expression object within the select",
+							"id": "20281266-25b7-4820-8c84-0d0779eb04e5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"password": "{{password}}",
+										"username": "{{user}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"class\": \"pricelists\",\r\n  \"select\": [\r\n\t\"ID\", \r\n\t\"Code\", \r\n\t\"Name\",\r\n\t{\r\n\t  \"name\": \"Firms\",\r\n\t  \"value\":\r\n\t  {\r\n\t\t\"class\": \"firms\",\r\n\t\t\"select\": [\"ID\", \"Code\", \"Name\"],\r\n\t\t\"where\": \"PriceList_ID = :ID\"\r\n\t }\r\n     }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/query",
+								"description": "<p>Selection of attributes. \"Pricelists\" has selection of some attributes from class \"pricelists\" and \"where\" condition.</p>"
+							},
+							"response": []
+						}
+					],
+					"id": "8136509b-a58b-4db2-aa29-1249c46b28e0",
+					"description": "<p>In advanced queries \"select\" is used as both \"select\" and \"expand\".</p>"
+				},
+				{
+					"name": "Where",
+					"item": [],
+					"id": "c51ddcee-6ec2-46a4-8ff6-4b06a4250777",
+					"description": "<p>There isn't any major difference in usage of \"where\" except it's written as property in JSON body. -(see example)</p>"
+				},
+				{
+					"name": "Order by",
+					"item": [
+						{
+							"name": "Selection of a collection of issued invoices sorted by code and then by quantity",
+							"id": "1ef93ddc-a8fe-4099-88fc-53a3b0546ad9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{supervisor}}",
+										"password": ""
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"class\": \"issuedinvoices\",\r\n  \"select\": [\r\n\t\"Amount\", \r\n\t{\r\n\t  \"name\": \"Firm_ID\",\r\n\t  \"value\":\r\n\t  {\r\n\t\t\"select\": [\"ID\", \"Code\", \"Name\"]\r\n\t  }\r\n   }\r\n],\r\n\t\"orderby\": [\r\n\t  \"Firm_ID.Code\",\r\n\t  { \"value\": \"Amount\", \"desc\": true }\r\n]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/query",
+								"description": "</p>Selection which is ordered by \"Code\" from \"Firm_ID\" object.</p>"
+							},
+							"response": []
+						}
+					],
+					"id": "a7aad7ef-c892-485f-99ca-e204460f1e48",
+					"description": "<p>\"order by\" is used to sort the output in the same way as in SQL. Sorting is specified in the \"orderby\" property of the query object.</p>"
+				},
+				{
+					"name": "Group by",
+					"item": [
+						{
+							"name": "Selection of 3 companies with highest amount",
+							"id": "32a96e61-7f94-483f-b01b-73f15e3e8187",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "{{supervisor}}",
+										"password": ""
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"select\": [\r\n\t\t{ \"name\": \"Amount\", \"value\": \"Sum(Amount)\" },\r\n\t\t{\r\n\t\t\t\"name\": \"Firm_ID\",\r\n\t\t\t\"value\":\r\n\t\t\t\t{\r\n\t\t\t\t\t\"select\": [\"ID\", \"Code\", \"Name\"]\r\n\t\t\t\t}\r\n\t\t}\r\n\t],\r\n\t\"orderby\": [\r\n\t\t{ \"value\": \"Sum(Amount)\", \"desc\": true }\r\n\t],\r\n\t\"groupby\": [\r\n\t\t\"Firm_ID\"\r\n\t],\r\n\t\"take\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/issuedinvoices/query",
+								"description": "<p>Selection with restriction of 3 items max and sorted by \"Amount\" attribute.</p>"
+							},
+							"response": []
+						}
+					],
+					"id": "fadd5ba1-95d6-4e3e-bb75-d1e9f7b9f0e4",
+					"description": "<p>There isn't any major difference in usage of \"groupby\" except it's written as property in JSON body. -(see example)</p>"
+				}
+			],
+			"id": "c51dad2d-b875-4f21-bcf8-71cb5d5b4a37",
+			"description": "<p>Extended questioning differs from the basic one in the form of input data (query) and in the way are transmitted. The query is sent in the form of JSON document (so-called query object) in the body of the HTTP POST request. There are two types of resources on which extended querying can be used:</p>\n\n*   <p>The first variant is to send an HTTP request to the subresource of the BO collection /{connection}/{BO collection}/query, then it is not necessary to specify the class property (it is known thanks to the superior BO collection).</p>\n*   <p>The second option is to send an HTTP request to a general resource for extended query /{connection}/query, then it is necessary to specify the class property (it is not known due to the general nature of the resource).</p>\n\n<h2>query object</h2><table><tbody><tr><th>Property</th><th>JSON type</th><th>Meaning</th></tr><tr><td>class</td><td>string</td><td>The identifier of the collection on which the query is being executed</td></tr><tr><td>select</td><td>array</td><td>Custom query, see <a href=\"#2185b328-bbb0-4d22-9a34-1264581a767f\">select clause</a> for more</td></tr><tr><td>where</td><td>string</td><td>Collection restrictions, see <a href=\"#baf30dfb-baf2-45ac-9c3e-6b2a7a78b9f1\">where clause</a> for more</td></tr><tr><td>groupby</td><td>string</td><td>Collection aggregation, see <a href=\"#8b7bd312-1256-4d48-8676-f3b90c8d7886\">groupby clause</a> for more</td></tr><tr><td>orderby</td><td>array</td><td>Collection ordering, see <a href=\"#97553815-00e5-42ea-b5e0-8be60c592956\">orderby clause</a> for more</td></tr></tbody></table><h2>expression object</h2><table><tbody><tr><th>Property</th><th>JSON type</th><th>Meaning</th></tr><tr><td>name</td><td>string</td><td>field name in the object</td></tr><tr><td>value</td><td>string/array/object</td><td><br>string - expression that is evaluated in the resulting value<br><br>array - array containing strings with expressions that are evaluated in the resulting values<br><br>object - An object can have three different types:<br><br>1. query object - when using a query object, it is a nested query, an option available only in the extended variant of querying<br><br>2. array - if a field BO referring to another BO or a collection of BOs is specified in the name property of the parent expression object, it contains the fields of the referenced BO to be included in the query result<br><br>3. specification object - if the name property of the parent expression object does not correspond to the name of the BO field referring to another BO or collection of BOs (which we want to place under the selected name) as in the previous case, it allows specifying the BO field from which the resulting value will be drawn, including specific fields of the referenced BO (see table Specification object)</td></tr></tbody></table>"
+		},
+		{
+			"name": "resources for MS excel functions",
+			"item": [
+				{
+					"name": "turnover",
+					"id": "8cd18a5b-27ca-4230-a024-144d5aa2c5d2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/bookentries/turnover?date-from=2005-01-01&date-to=2010-12-31&accounts=22110&include-requests=true&divisions=000,100&divisions-with-children=true&firms=00002",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookentries",
+								"turnover"
+							],
+							"query": [
+								{
+									"key": "date-from",
+									"value": "2005-01-01"
+								},
+								{
+									"key": "date-to",
+									"value": "2010-12-31"
+								},
+								{
+									"key": "accounts",
+									"value": "22110"
+								},
+								{
+									"key": "include-requests",
+									"value": "true"
+								},
+								{
+									"key": "divisions",
+									"value": "000,100"
+								},
+								{
+									"key": "divisions-with-children",
+									"value": "true"
+								},
+								{
+									"key": "firms",
+									"value": "00002"
+								}
+							]
+						},
+						"description": "## Excel example #1\n\nSources are used to obtain information about turnover on accounts. They draw data from the Accounting journal agenda, or also from the Accounting requests agenda."
+					},
+					"response": []
+				},
+				{
+					"name": "balance",
+					"id": "fc4e4751-30f1-4532-a518-e955869de929",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utils/balance?date-to=2018-12-31&accounts=02100",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utils",
+								"balance"
+							],
+							"query": [
+								{
+									"key": "date-to",
+									"value": "2018-12-31"
+								},
+								{
+									"key": "accounts",
+									"value": "02100"
+								}
+							]
+						},
+						"description": "## Excel example #2\n\nThe resource is used to obtain information about account balances on a certain date. It draws data from the Accounting journal agenda, or also from the Accounting requests agenda."
+					},
+					"response": []
+				},
+				{
+					"name": "stock",
+					"id": "5d6e2b0b-1f39-420a-8ff2-4b4687d7d5d6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utils/stock?date-to=2018-12-31&stores=01,02&store-menu-items=HW&store-card-categories=M&information-type=q",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utils",
+								"stock"
+							],
+							"query": [
+								{
+									"key": "date-to",
+									"value": "2018-12-31"
+								},
+								{
+									"key": "stores",
+									"value": "01,02"
+								},
+								{
+									"key": "store-menu-items",
+									"value": "HW"
+								},
+								{
+									"key": "store-card-categories",
+									"value": "M"
+								},
+								{
+									"key": "information-type",
+									"value": "q"
+								}
+							]
+						},
+						"description": "## Excel example #3\n\nThe resource is used to obtain information about the state of the warehouse (quantity, price) on a certain date according to the selected criteria."
+					},
+					"response": []
+				},
+				{
+					"name": "moves",
+					"id": "579e0e12-4817-4842-b572-b8b11d551eb8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utils/moves?date-from=2019-01-01&date-to=2019-12-31&stores=01,02&store-cards=01,02,03&divisions=000&information-type=a",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utils",
+								"moves"
+							],
+							"query": [
+								{
+									"key": "date-from",
+									"value": "2019-01-01"
+								},
+								{
+									"key": "date-to",
+									"value": "2019-12-31"
+								},
+								{
+									"key": "stores",
+									"value": "01,02"
+								},
+								{
+									"key": "store-cards",
+									"value": "01,02,03"
+								},
+								{
+									"key": "divisions",
+									"value": "000"
+								},
+								{
+									"key": "information-type",
+									"value": "a"
+								}
+							]
+						},
+						"description": "## Excel example #4\nThe resource is used to obtain information about stock movements (quantity, price) for a certain period according to selected criteria."
+					},
+					"response": []
+				},
+				{
+					"name": "sale",
+					"id": "155e7577-3af1-495e-b68d-4a4398177b13",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utils/sale?date-from=2005-01-01&date-to=2010-12-31&stores=01,02&store-cards=01,02,03&divisions=000&information-type=a",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utils",
+								"sale"
+							],
+							"query": [
+								{
+									"key": "date-from",
+									"value": "2005-01-01"
+								},
+								{
+									"key": "date-to",
+									"value": "2010-12-31"
+								},
+								{
+									"key": "stores",
+									"value": "01,02"
+								},
+								{
+									"key": "store-cards",
+									"value": "01,02,03"
+								},
+								{
+									"key": "divisions",
+									"value": "000"
+								},
+								{
+									"key": "information-type",
+									"value": "a"
+								}
+							]
+						},
+						"description": "## Excel example #5\nThe resource is used to obtain information on sales of stock items (quantity, sales price without VAT) for a certain period according to selected criteria."
+					},
+					"response": []
+				},
+				{
+					"name": "receivable",
+					"id": "8afa43dd-fbe2-4b98-aba1-e946a19be0f0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utils/receivable?doc-date-from=2018-01-01&doc-date-to=2018-12-31&firms=00011&information-type=np",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utils",
+								"receivable"
+							],
+							"query": [
+								{
+									"key": "doc-date-from",
+									"value": "2018-01-01"
+								},
+								{
+									"key": "doc-date-to",
+									"value": "2018-12-31"
+								},
+								{
+									"key": "firms",
+									"value": "00011"
+								},
+								{
+									"key": "information-type",
+									"value": "np"
+								}
+							]
+						},
+						"description": "## Excel example #6\nThe resource is used to obtain information about receivables - it returns the amount of the selected type calculated according to the selected criteria. It is used similarly as a resource for liabilities."
+					},
+					"response": []
+				},
+				{
+					"name": "payable",
+					"id": "06d76b3a-c76b-40c2-846e-838b4ace02ac",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utils/payable?doc-date-from=2018-01-01&doc-date-to=2018-12-31&firms=00006&information-type=t",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utils",
+								"payable"
+							],
+							"query": [
+								{
+									"key": "doc-date-from",
+									"value": "2018-01-01"
+								},
+								{
+									"key": "doc-date-to",
+									"value": "2018-12-31"
+								},
+								{
+									"key": "firms",
+									"value": "00006"
+								},
+								{
+									"key": "information-type",
+									"value": "t"
+								}
+							]
+						},
+						"description": "## Excel example #7\nThe resource is used to obtain information about liabilities - it returns the amount of the selected type calculated according to the selected criteria. It is used similarly as a source for receivables."
+					},
+					"response": []
+				},
+				{
+					"name": "depreciation",
+					"id": "8441ea95-e61d-4b51-8a3b-45aaaa8b7311",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utils/depreciation?date-from=2018-01-01&date-to=2018-12-31&divisions=01,02&information-type=t",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utils",
+								"depreciation"
+							],
+							"query": [
+								{
+									"key": "date-from",
+									"value": "2018-01-01"
+								},
+								{
+									"key": "date-to",
+									"value": "2018-12-31"
+								},
+								{
+									"key": "divisions",
+									"value": "01,02"
+								},
+								{
+									"key": "information-type",
+									"value": "t"
+								}
+							]
+						},
+						"description": "## Excel example #8\nThe resource is used to obtain information about depreciation - it returns the total amount of accounting or tax depreciation calculated according to the selected criteria."
+					},
+					"response": []
+				},
+				{
+					"name": "asset",
+					"id": "9290f366-fd88-4f06-90cc-03ce8761acd3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utils/asset?date-to=2018-12-31&responsibles=4000000101&information-type=tr",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utils",
+								"asset"
+							],
+							"query": [
+								{
+									"key": "date-to",
+									"value": "2018-12-31"
+								},
+								{
+									"key": "responsibles",
+									"value": "4000000101"
+								},
+								{
+									"key": "information-type",
+									"value": "tr"
+								}
+							]
+						},
+						"description": "## Excel example #9\nThe resource is used to obtain information about the state of the property - it returns the initial or residual price calculated according to the selected criteria."
+					},
+					"response": []
+				},
+				{
+					"name": "payroll",
+					"id": "c626a414-e73d-4530-a0a4-56516dae785d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "{{user}}",
+								"password": "{{password}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utils/payroll?wage-periods=2018/12&employ-patterns=HPP&information-type=t",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utils",
+								"payroll"
+							],
+							"query": [
+								{
+									"key": "wage-periods",
+									"value": "2018/12"
+								},
+								{
+									"key": "employ-patterns",
+									"value": "HPP"
+								},
+								{
+									"key": "information-type",
+									"value": "t"
+								}
+							]
+						},
+						"description": "## Excel example #10\nThe resource is used to obtain information from the field of salaries and HR - it returns information of various types calculated according to the selected criteria."
+					},
+					"response": []
+				}
+			],
+			"id": "bd96ad24-b1c5-472a-b61e-ea899b19827a"
 		}
 	]
 }
